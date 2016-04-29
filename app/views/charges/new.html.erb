@@ -1,0 +1,67 @@
+<h1>Checkout</h1><br><br>
+
+<%= form_tag charges_path do %>
+  <article>
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+     <div= "billing"><h3>Billing Address</h3>
+      <div class="field">
+        <%=label_tag "Name" %><br />
+        <%=text_field :fname, [:fname] %>
+        <%=text_field :lname, [:lname] %>
+      </div><br />
+      <div class="field">
+        <%=label_tag "Address" %><br />
+        <%=text_field :address1, [:address1] %>
+        <%=text_field :address2, [:address2] %>
+      </div><br />
+      <div class="field">
+        <%=label_tag "City" %><br />
+        <%=text_field :city, [:city] %>  
+      </div><br />
+      <div class="field">
+        <%=label_tag "Contact Number" %><br />
+        <%=text_field :contact, [:contact] %>  
+      </div><br />
+      <div class="field">
+        <%=label_tag "Is billing address same as delivery address?" %>
+        <%= check_box :same, [:same] %>
+      </div><br /><br >
+      </div>
+      <div class ="delivery"><h3>Delivery Address</h3>
+      <div class="field">
+        <%=label_tag "Name" %><br />
+        <%=text_field :fname, [:fname] %>
+        <%=text_field :lname, [:lname] %>
+      </div><br />
+      <div class="field">
+        <%=label_tag "Address" %><br />
+        <%=text_field :address1, [:address1] %>
+        <%=text_field :address2, [:address2] %>
+      </div><br />
+      <div class="field">
+        <%=label_tag "City" %><br />
+        <%=text_field :city, [:city] %>  
+      </div><br />
+      <div class="field">
+        <%=label_tag "Contact Number" %><br />
+        <%=text_field :contact, [:contact] %>
+      </div><br />
+      <div class="field"><br />
+        <%=label_tag "Would you like to send a Gift Message?" %><br />
+        <%=text_area :message, [:message] %>  
+      </div><br /><br />
+      </div>
+      <%=label_tag="Total Amount"%><%=@amount %> 
+      
+  </article>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="Your payment total"
+          data-amount="<%=@amount %>"
+          data-locale="auto"></script>
+  <% end %>

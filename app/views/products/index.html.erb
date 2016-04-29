@@ -1,0 +1,84 @@
+<!-- catalog page -->
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Products</h1><br><br>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>Subcategory</th>
+      <th colspan="8"></th>
+    </tr>
+  </thead>
+
+<style>
+table, th, td {
+    
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+
+.description {
+  width:200px;
+}
+</style>
+
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td>
+          <div class = "image">
+          <%= image_tag product.productImage %>
+          </div>
+        </td>
+        <td>
+          <div class = "title">
+          <%= link_to product.title, product %>
+          </div>
+        </td>
+        <td>
+          <div class = "description">
+            <%= product.description %>
+          </div>
+        </td>
+        <td>
+          <div class = "price">
+            <%= product.price %>
+          </div>
+        </td>
+          <td>
+          <div class = "quantity">
+
+          </div>
+        </td>
+        </tr>
+        <tr>
+          <td>
+            <div class = "quantity">
+              <%= "Quantity" %>
+              <%= number_field :quantity, value: 1, :style => "width:10px" %>
+              <%= hidden_field :product_id, value: product.id %>
+            </div>
+          </td>
+          <td><p></p></td>
+          <td><%= button_to "Add to Cart", "/cart/#{product.id}", :method => "get" %></td>
+          <td><p></p></td>
+          <td><%= product.category %></td>
+          <td><%= product.subcategory %></td>
+          <td><%= link_to 'Show', product %></td>
+          <td><%= link_to 'Edit', edit_product_path(product) %></td>
+          <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+
+</table>
+<br /> <br />
+<p><%= link_to 'New Product', new_product_path %></p>

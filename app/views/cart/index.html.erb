@@ -1,0 +1,42 @@
+<h1>Your Cart</h1>
+<br><br>
+
+<% if @cart.empty? %>
+<p></p>
+<% else %>
+    <%= link_to 'Empty your Cart', cart_clear_path %>
+<% end %>
+
+<br><br><br>
+
+<% total = 0 %>
+
+<ul>
+<% @cart.each do | id, quantity | %>
+            <% product = Product.find_by_id(id) %>
+        
+            <li>
+                <%= link_to product.title, product %>
+                <p><%= product.description %></p>
+                <td><%= image_tag product.productImage %></td>
+                <p><%= number_to_currency(product.price, :unit => '€') %></p>
+                <div class="col-xs-6">
+                    <p>Quantity:</p><p>
+                        <!--<p><%= quantity %></p>-->
+                <!--<%= number_field :quantity, value: quantity.to_i %></td>-->
+                <%= hidden_field :product_id, value: product.id %>
+                <%= number_field_tag 'quantity', quantity %>
+                <!--<p>Quantity: <%= quantity %></p>-->
+                <%= link_to "remove item", product, :method => :remove, :confirm => "Are you sure?",:remote => true %>
+                <!--<%= link_to "Remove Item"%><!-- #:controller => "cart", :action => "remove" %>-->-->
+            </li><br />
+            <% total += quantity * product.price %>
+            
+    <% end %>
+<p><b>Total: <%= number_to_currency(total, :unit => '€') %></b></p><br>
+
+<%= link_to "Go to checkout!", :controller => "charges", :action => "new", :amount => total %>
+
+</form>
+
+</ul>
